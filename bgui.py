@@ -1,6 +1,5 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
-from sre_parse import State
 from tkinter import *
 
 root = Tk()
@@ -49,24 +48,16 @@ buttonRandom.grid(columnspan=2,row=2,column=3)
 buttonStrat.grid(columnspan=2,row=3,column=3)
 
 #Serach options - readio buttons
-OPTIONS = [
-    ("Uniformed Cost Search","ucs"),
-    ("Iteratice Deeping Search","ids"),
-    ("A*","a"),
-    ("Iteratice Deeping A*","ida")
-]
-valr = StringVar()
-valr.set("usc")
+opVar = StringVar()
+opVar.set("UCS")
+searchOp = OptionMenu(root,opVar,"UCS","IDS","A*","IDA*")
+searchOp.grid(columnspan=2,padx=4,pady=5)
 
-for text, mode in OPTIONS:
-    Radiobutton(root, text=text, variable=valr, value=mode).grid(columnspan=2)
-
-#Heuristic function selection
-valh = StringVar()
-valh.set("h1")
-
-radioH1 = Radiobutton(root, text="Heuristic 1", variable=valh, value="h1").grid(columnspan=1)
-radioH2 = Radiobutton(root, text="Heuristic 2", variable=valh, value="h2").grid(columnspan=1)
+#Hurestic Functions
+hVar = StringVar()
+hVar.set("h1")
+searchOp = OptionMenu(root,hVar,"h1","h2")
+searchOp.grid(columnspan=2,padx=4,pady=5)
 
 #main loop
 root.mainloop()
