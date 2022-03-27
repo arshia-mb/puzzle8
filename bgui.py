@@ -1,5 +1,6 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
+from sre_parse import State
 from tkinter import *
 
 root = Tk()
