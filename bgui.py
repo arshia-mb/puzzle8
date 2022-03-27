@@ -10,8 +10,8 @@ infoLabel = Label(root, text = "Puzzle initial state",width=35, borderwidth=5)
 infoLabel.grid(row = 0,column=0, columnspan=3, padx=10,pady=10)
 
 #Answer Labels
-answerE = Entry(root, width = 35, borderwidth=5, state=DISABLED)
-answerE.grid(row=4,column=0,columnspan=3,padx=1,pady=1)
+#answerE = Entry(root, width = 35, borderwidth=5, state=DISABLED)
+#answerE.grid(row=4,column=0,columnspan=3,padx=1,pady=1)
 
 #Define buttons
 def myClick():
@@ -43,10 +43,29 @@ button_7.grid(row=3 ,column=0)
 button_8.grid(row=3 ,column=1)
 button_9.grid(row=3 ,column=2)
 
-buttonInput.grid(columnspan=2,row=2,column=3)
-buttonRandom.grid(columnspan=2,row=3,column=3)
-buttonStrat.grid(columnspan=2,row=4,column=3)
+buttonInput.grid(columnspan=2,row=1,column=3)
+buttonRandom.grid(columnspan=2,row=2,column=3)
+buttonStrat.grid(columnspan=2,row=3,column=3)
 
+#Serach options - readio buttons
+OPTIONS = [
+    ("Uniformed Cost Search","ucs"),
+    ("Iteratice Deeping Search","ids"),
+    ("A*","a"),
+    ("Iteratice Deeping A*","ida")
+]
+valr = StringVar()
+valr.set("usc")
+
+for text, mode in OPTIONS:
+    Radiobutton(root, text=text, variable=valr, value=mode).grid(columnspan=2)
+
+#Heuristic function selection
+valh = StringVar()
+valh.set("h1")
+
+radioH1 = Radiobutton(root, text="Heuristic 1", variable=valh, value="h1").grid(columnspan=1)
+radioH2 = Radiobutton(root, text="Heuristic 2", variable=valh, value="h2").grid(columnspan=1)
 
 #main loop
 root.mainloop()
