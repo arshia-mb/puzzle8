@@ -1,6 +1,7 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
 from tkinter import *
+from traceback import print_tb
 
 root = Tk()
 root.title("8 Puzzle Solver")
@@ -48,16 +49,24 @@ buttonRandom.grid(columnspan=2,row=2,column=3)
 buttonStrat.grid(columnspan=2,row=3,column=3)
 
 #Serach options - readio buttons
+def callback(*args):
+    if(opVar.get() == "UCS" or opVar.get() == "IDS"):
+        huresticOp.config(state=DISABLED)
+    else:
+        huresticOp.config(state=NORMAL)
+
 opVar = StringVar()
 opVar.set("UCS")
+opVar.trace("w",callback)
 searchOp = OptionMenu(root,opVar,"UCS","IDS","A*","IDA*")
 searchOp.grid(columnspan=2,padx=4,pady=5)
 
 #Hurestic Functions
 hVar = StringVar()
 hVar.set("h1")
-searchOp = OptionMenu(root,hVar,"h1","h2")
-searchOp.grid(columnspan=2,padx=4,pady=5)
+huresticOp = OptionMenu(root,hVar,"h1","h2")
+huresticOp.config(state=DISABLED)
+huresticOp.grid(columnspan=2,padx=4,pady=5)
 
 #main loop
 root.mainloop()
