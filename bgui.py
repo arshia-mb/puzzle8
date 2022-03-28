@@ -1,10 +1,14 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
-from email import message
 from random import shuffle
-from tkinter import *
 import re
+from tkinter import *
 from tkinter import messagebox
+
+from graph import TreeGraph
+from graph import Node
+
+
 
 root = Tk()
 root.title("8 Puzzle Solver")
@@ -83,6 +87,62 @@ def initRandom():
         if(i == 8):
             button_8.config(text=c)
 
+#Starting the search
+def clickStart():
+    #Creating the graph
+    g = TreeGraph() #The grid graph
+    Q1 = Node(1,button_0['text'])
+    Q2 = Node(2,button_1['text'])
+    Q3 = Node(3,button_2['text'])
+    Q4 = Node(4,button_3['text'])
+    Q5 = Node(5,button_4['text'])
+    Q6 = Node(6,button_5['text'])
+    Q7 = Node(7,button_6['text'])
+    Q8 = Node(8,button_7['text'])
+    Q9 = Node(9,button_8['text'])
+    g.addNode(Q1)
+    g.addNode(Q2)
+    g.addNode(Q3)
+    g.addNode(Q4)
+    g.addNode(Q5)
+    g.addNode(Q6)
+    g.addNode(Q7)
+    g.addNode(Q8)
+    g.addNode(Q9)
+    #creating the edges
+    Q1.addChild(Q2)
+    Q1.addChild(Q4)
+
+    Q2.addChild(Q1)
+    Q2.addChild(Q5)
+    Q2.addChild(Q3)
+    
+    Q3.addChild(Q2)
+    Q3.addChild(Q6)
+    
+    Q4.addChild(Q1)
+    Q4.addChild(Q5)
+    Q4.addChild(Q7)
+    
+    Q5.addChild(Q2)
+    Q5.addChild(Q4)
+    Q5.addChild(Q6)
+    Q5.addChild(Q8)
+    
+    Q6.addChild(Q3)
+    Q6.addChild(Q5)
+    Q6.addChild(Q9)
+
+    Q7.addChild(Q4)
+    Q7.addChild(Q8)
+
+    Q8.addChild(Q7)
+    Q8.addChild(Q5)
+    Q8.addChild(Q9)
+
+    Q9.addChild(Q6)
+    Q9.addChild(Q8)
+    g.print()
 
 button_0 = Button(root, text = "  ", padx=40,pady=20)
 button_1 = Button(root, text = "1", padx=40,pady=20) #command=myCommand()
@@ -96,7 +156,7 @@ button_8 = Button(root, text = "8", padx=40,pady=20)
 
 buttonInput = Button(root, text = "Initial Sate", padx=60,pady=20,command=initInput)
 buttonRandom = Button(root, text = "Ranzdomize", padx=55,pady=20,command=initRandom)
-buttonStrat = Button(root, text = "Start", padx=75,pady=10)
+buttonStrat = Button(root, text = "Start", padx=75,pady=10,command=clickStart)
 
 #put buttins on the screen
 

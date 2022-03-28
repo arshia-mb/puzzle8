@@ -44,8 +44,9 @@ class TreeGraph:
     #Utility function
     def print(self):
         for node in self.nodeList:
-            print("Node:",node.value)
+            print("Node:",node.key)
             print("Children List:")
             for child, edge in node.children:
                 print(edge," -> ",child.value)
-                
+
+
