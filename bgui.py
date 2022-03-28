@@ -1,6 +1,7 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
 from email import message
+from random import shuffle
 from tkinter import *
 import re
 from tkinter import messagebox
@@ -56,6 +57,33 @@ def initInput():
                 button_8.config(text=c)
     return True
 
+#Randomizing the input sequnce
+def initRandom():
+    seq = ["  ","1","2","3","4","5","6","7","8"]
+    shuffle(seq)
+    for i in range(9):
+        c = seq[i]
+        #checking wich button to update
+        if(i == 0):
+            button_0.config(text=c)
+        if(i == 1):
+            button_1.config(text=c)
+        if(i == 2):
+            button_2.config(text=c)
+        if(i == 3):
+            button_3.config(text=c)
+        if(i == 4):
+            button_4.config(text=c)
+        if(i == 5):
+            button_5.config(text=c)
+        if(i == 6):
+            button_6.config(text=c)
+        if(i == 7):
+            button_7.config(text=c)
+        if(i == 8):
+            button_8.config(text=c)
+
+
 button_0 = Button(root, text = "  ", padx=40,pady=20)
 button_1 = Button(root, text = "1", padx=40,pady=20) #command=myCommand()
 button_2 = Button(root, text = "2", padx=40,pady=20)
@@ -67,7 +95,7 @@ button_7 = Button(root, text = "7", padx=40,pady=20)
 button_8 = Button(root, text = "8", padx=40,pady=20)
 
 buttonInput = Button(root, text = "Initial Sate", padx=60,pady=20,command=initInput)
-buttonRandom = Button(root, text = "Ranzdomize", padx=55,pady=20)
+buttonRandom = Button(root, text = "Ranzdomize", padx=55,pady=20,command=initRandom)
 buttonStrat = Button(root, text = "Start", padx=75,pady=10)
 
 #put buttins on the screen
