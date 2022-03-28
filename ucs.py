@@ -53,12 +53,12 @@ class ucs:
         seq[j] = c
         return seq
 
-
+    #Main function
     def search(self,STARTSTATE,FINSATATE):
         #Starting the search tree
         self.root = Node(STARTSTATE,0)
         self.fringe.put(self.root)
-       # self.parent.append((self.root, self.root))
+        
         while not self.fringe.empty():
             node = self.fringe.get()
             seq = node.key.copy()
