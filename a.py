@@ -1,4 +1,4 @@
-#A* and IDA* search algorithm with multiple hurestic functions
+#IDA* search algorithm with multiple hurestic functions
 #Alast0r 24 MAY 2022
 from queue import PriorityQueue
 from graph import *
