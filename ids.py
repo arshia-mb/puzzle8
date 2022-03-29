@@ -11,7 +11,7 @@ class ids:
         self.parent = []
         self.root = None
         self.checksum = 0
-        self.MAXITERATION = 10
+        self.MAXITERATION = 100000
 
     def getParent(self,node):
         for child,parent in self.parent:
@@ -82,7 +82,7 @@ class ids:
             depth = node.value
             #print("state: ",seq)
             #iterating for depth
-            if depth == MAXDEPTH:
+            if depth > MAXDEPTH:
                 continue
             #check for termination
             if seq == FINSTATE:
@@ -123,6 +123,6 @@ class ids:
 
 
 if __name__ == '__main__':
-    START = [0,1,2,3,4,5,6,7,8]
+    START = [3,1,2,4,5,0,6,7,8]
     FIN = [0,1,2,3,4,5,6,7,8]
     ids().search(START,FIN)
