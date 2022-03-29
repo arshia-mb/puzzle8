@@ -64,7 +64,7 @@ class ids:
             self.fringe = deque() #Stack for expandable nodes
             self.parent = []
             self.root = None
-            print("depth :", i)
+            #print("depth :", i)
             #Begin Search
             self.dfs(STARTSTATE,FINSTATE,i)
             if(self.checksum == 1):
@@ -80,12 +80,10 @@ class ids:
             node = self.fringe.pop()
             seq = node.key.copy()
             depth = node.value
-            print("state: ",seq)
+            #print("state: ",seq)
             #iterating for depth
-            if depth == MAXDEPTH+1:
+            if depth == MAXDEPTH:
                 continue
-            elif depth > MAXDEPTH+1:
-                return
             #check for termination
             if seq == FINSTATE:
                 self.printans(node)
@@ -125,6 +123,6 @@ class ids:
 
 
 if __name__ == '__main__':
-    START = [1,2,5,0,3,4,6,7,8]
+    START = [0,1,2,3,4,5,6,7,8]
     FIN = [0,1,2,3,4,5,6,7,8]
     ids().search(START,FIN)
