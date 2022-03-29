@@ -1,5 +1,5 @@
 #Iteratice Deeping Search algorithm representation 
-# #Alast0r 23 MAY 2022
+#Alast0r 23 MAY 2022
 from collections import deque
 from graph import *
 
