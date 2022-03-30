@@ -120,9 +120,3 @@ class ids:
         print(node.key,"\n",node.value)
         print("Closed List",len(self.tree.nodeList))
         print("Open List: ",len(self.fringe))
-
-
-if __name__ == '__main__':
-    START = [3,1,2,4,5,0,6,7,8]
-    FIN = [0,1,2,3,4,5,6,7,8]
-    ids().search(START,FIN)

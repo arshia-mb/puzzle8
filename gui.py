@@ -1,9 +1,13 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
+from cgitb import text
 from random import shuffle
 import re
 from tkinter import *
 from tkinter import messagebox
+import a #A* Search
+import ucs #Uninformed cost search
+import ids #Iterative deeping search
 
 root = Tk()
 root.title("8 Puzzle Solver")
@@ -11,6 +15,12 @@ root.title("8 Puzzle Solver")
 #Top side label of info
 infoLabel = Label(root, text = "Puzzle initial state",width=35, borderwidth=5)
 infoLabel.grid(row = 0,column=0, columnspan=3, padx=10,pady=10)
+
+#Label for answer
+ansText = Label(root, text = "Search Resault:",width=25, borderwidth=5)
+ansText.grid(row = 4,column=4, padx=10,pady=10)
+ansLabel = Label(root, text = "left right up down funck it up",width=25, borderwidth=5)
+ansLabel.grid(row = 5,column=3,columnspan=2,padx=10,pady=10)
 
 #Initial State Entry
 stateE = Entry(root, width = 25, borderwidth=5)
@@ -83,8 +93,52 @@ def initRandom():
             button_8.config(text=c)
 
 #Starting the search
-def clickStart():
-    pass
+def clickStart(): 
+    INISTATE = []
+    FINSTATE = [0,1,2,3,4,5,6,7,8]
+    #Getting the initial state
+    if(button_0['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_0['text']))
+    if(button_1['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_1['text']))
+    if(button_2['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_2['text']))
+    if(button_3['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_3['text']))
+    if(button_4['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_4['text']))
+    if(button_5['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_5['text']))
+    if(button_6['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_6['text']))
+    if(button_7['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_7['text']))
+    if(button_8['text'] == "  "):
+        INISTATE.append(0)
+    else:
+        INISTATE.append(int(button_8['text']))
+
+    op = opVar.get() #Getting what operation we have
+    hf = hVar.get() #Getting the Hurestic function value
+    if op == "UCS":
+        ansLabel.config(text = INISTATE)
+        
 
 button_0 = Button(root, text = "  ", padx=40,pady=20)
 button_1 = Button(root, text = "1", padx=40,pady=20) #command=myCommand()
@@ -127,14 +181,14 @@ opVar = StringVar()
 opVar.set("UCS")
 opVar.trace("w",callback)
 searchOp = OptionMenu(root,opVar,"UCS","IDS","A*","IDA*")
-searchOp.grid(columnspan=2,padx=4,pady=5)
+searchOp.grid(row = 4, column = 0, columnspan=2,padx=4,pady=5)
 
 #Hurestic Functions
 hVar = StringVar()
 hVar.set("h1")
 huresticOp = OptionMenu(root,hVar,"h1","h2")
 huresticOp.config(state=DISABLED)
-huresticOp.grid(columnspan=2,padx=4,pady=5)
+huresticOp.grid(row = 5, column = 0,columnspan=2,padx=4,pady=5)
 
 #main loop
 root.mainloop()

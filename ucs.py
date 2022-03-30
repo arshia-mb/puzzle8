@@ -101,8 +101,3 @@ class ucs:
         print(node.key,"\n",node.value)
         print("Closed List",len(self.tree.nodeList))
         print("Open List: ",self.fringe.qsize())
-
-if __name__ == '__main__':
-    START = [1,2,5,0,3,4,6,7,8]
-    FIN = [0,1,2,3,4,5,6,7,8]
-    ucs().search(START,FIN)
