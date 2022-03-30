@@ -142,7 +142,6 @@ class Asearch:
             ans = ""
             while(len(path) > 0):
                 ans += path.pop() + "->"
-            print(ans)
             ans += "Fin"
             ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nNodes in the search tree:" + str(len(self.tree.nodeList)) + "\nMaximum depth: " + str(self.maxdepth) 
             ans += "\nNodes in the fringe: " + str(self.fringe.qsize())

@@ -12,14 +12,14 @@ root = Tk()
 root.title("8 Puzzle Solver")
 
 #Top side label of info
-infoLabel = Label(root, text = "Puzzle initial state",width=35, borderwidth=5)
-infoLabel.grid(row = 0,column=0, columnspan=3, padx=10,pady=10)
+#infoLabel = Label(root, text = "Puzzle initial state",width=35, borderwidth=5)
+#infoLabel.grid(row = 0,column=0, columnspan=3, padx=10,pady=10)
 
 #Label for answer
-ansText = Label(root, text = "Search Resault:",width=25, borderwidth=5)
-ansText.grid(row = 4,column=4, padx=10,pady=10)
-ansLabel = Label(root, text = "left right up down funck it up",width=25, borderwidth=5)
-ansLabel.grid(row = 5,column=3,columnspan=2,padx=10,pady=10)
+ansText = Label(root, text = "Search Resault:")
+ansText.grid(row = 4,column=0, padx=5,pady=5)
+ansLabel = Label(root, text = "",justify=LEFT)
+ansLabel.grid(row = 5,column=0,columnspan=5,padx=5,pady=5,sticky=W)
 
 #Initial State Entry
 stateE = Entry(root, width = 25, borderwidth=5)
@@ -175,15 +175,15 @@ buttonStrat = Button(root, text = "Start", padx=75,pady=10,command=clickStart)
 
 #put buttins on the screen
 
-button_0.grid(row=1 ,column=0)
-button_1.grid(row=1 ,column=1)
-button_2.grid(row=1 ,column=2)
-button_3.grid(row=2 ,column=0)
-button_4.grid(row=2 ,column=1)
-button_5.grid(row=2 ,column=2)
-button_6.grid(row=3 ,column=0)
-button_7.grid(row=3 ,column=1)
-button_8.grid(row=3 ,column=2)
+button_0.grid(row=0 ,column=0)
+button_1.grid(row=0 ,column=1)
+button_2.grid(row=0 ,column=2)
+button_3.grid(row=1 ,column=0)
+button_4.grid(row=1 ,column=1)
+button_5.grid(row=1 ,column=2)
+button_6.grid(row=2 ,column=0)
+button_7.grid(row=2 ,column=1)
+button_8.grid(row=2 ,column=2)
 
 
 buttonInput.grid(columnspan=2,row=0,column=3)
@@ -200,14 +200,14 @@ opVar = StringVar()
 opVar.set("UCS")
 opVar.trace("w",callback)
 searchOp = OptionMenu(root,opVar,"UCS","IDS","A*","IDA*")
-searchOp.grid(row = 4, column = 0, columnspan=2,padx=4,pady=5)
+searchOp.grid(row = 3, column = 0, columnspan=1,padx=4,pady=5)
 
 #Hurestic Functions
 hVar = StringVar()
 hVar.set("h1")
 huresticOp = OptionMenu(root,hVar,"h1","h2")
 huresticOp.config(state=DISABLED)
-huresticOp.grid(row = 5, column = 0,columnspan=2,padx=4,pady=5)
+huresticOp.grid(row = 3, column = 1,columnspan=1,padx=4,pady=5)
 
 #main loop
 root.mainloop()
