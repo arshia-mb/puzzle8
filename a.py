@@ -6,7 +6,7 @@ from itertools import count
 unique = count()
 
 class Asearch:
-    def __init__(self):
+    def __init__(self,H = 1):
         self.tree = TreeGraph() #The tree excluding leaf/fringe nodes
         self.fringe = PriorityQueue() #Stack for expandable nodes
         self.parent = []

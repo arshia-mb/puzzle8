@@ -1,13 +1,14 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
 from cgitb import text
+from multiprocessing.pool import INIT
 from random import shuffle
 import re
 from tkinter import *
 from tkinter import messagebox
-import a #A* Search
-import ucs #Uninformed cost search
-import ids #Iterative deeping search
+from a import Asearch #A* Search
+from ucs import ucs #Uninformed cost search
+from ids import ids #Iterative deeping search
 
 root = Tk()
 root.title("8 Puzzle Solver")
@@ -134,10 +135,21 @@ def clickStart():
     else:
         INISTATE.append(int(button_8['text']))
 
+    #Starting the search
     op = opVar.get() #Getting what operation we have
-    hf = hVar.get() #Getting the Hurestic function value
+    hf = int(hVar.get()[1]) #Getting the Hurestic function value
+    ans = "" #Answer to the serach inlduing all the info we must show
     if op == "UCS":
-        ansLabel.config(text = INISTATE)
+        ans = ucs().search(INISTATE,FINSTATE)
+    elif op == "IDS":
+        ans = ids().search(INISTATE,FINSTATE)
+    elif op == "A*":
+        ans = Asearch(hf).search(INISTATE,FINSTATE)
+    else:
+        messagebox.showinfo("Non Feature","The IDA* search has not been implemented yet in the system.")
+        ans = ""
+    #Showing the answer       
+    ansLabel.config(text = ans) 
         
 
 button_0 = Button(root, text = "  ", padx=40,pady=20)
