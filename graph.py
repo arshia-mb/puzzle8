@@ -10,6 +10,7 @@ class Node:
         else:
             self.value = None
         self.children = [] #List of adjacent node
+        self.visited = False
     
     #Adding a edge to the node
     def addChild(self,node,edge=1):
@@ -28,18 +29,17 @@ class TreeGraph:
     def __init__(self):
         self.nodeList = [] #All vertecies in the graph
         
-        #Check if a node is inside the graph
+    #Check if a specific key is inside the graph is inside the graph
     def notIn(self,node):
         for nodes in self.nodeList:
             if(nodes.key == node.key):
                 return False #The node is inside the graph
         return True
 
+    #Adding a node to the 
     def addNode(self,node):
-        if(self.notIn(node)):
-            self.nodeList.append(node)
-            return True
-        return False
+        self.nodeList.append(node)
+    
         
     #Utility function
     def print(self):
