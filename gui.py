@@ -1,7 +1,5 @@
 #This is a basic GUI setup for getting input for the Puzzle
 #Alast0r 22 March 2022
-from cgitb import text
-from multiprocessing.pool import INIT
 from random import shuffle
 import re
 from tkinter import *
@@ -134,6 +132,15 @@ def clickStart():
         INISTATE.append(0)
     else:
         INISTATE.append(int(button_8['text']))
+    #Check if puzzle 8 is solvable:
+        inv_count = 0 #if inversions are odd then puzzle is not solvable
+        for i in range(len(INISTATE)):
+            for j in range(i+1,len(INISTATE)):
+                if INISTATE[i] != 0 and INISTATE[j] != 0 and INISTATE[i] > INISTATE[j] :
+                    inv_count += 1
+        if(not inv_count%2 == 0):
+            messagebox.showinfo("Not solvable","The puzzle 8 with this initial state cannot be solved. Please try other combinations")
+            return
 
     #Starting the search
     op = opVar.get() #Getting what operation we have

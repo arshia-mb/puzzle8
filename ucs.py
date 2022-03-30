@@ -3,10 +3,6 @@
 from queue import PriorityQueue
 from collections import deque
 from itertools import count
-from time import sleep
-from xmlrpc.client import getparser
-
-from pip import main
 unique = count()
 from graph import *
 
@@ -48,6 +44,7 @@ class ucs:
         node = Node(seq,depth+1)
         parent.addChild(node)
         self.tree.addNode(node)
+        #Checking the max depth of the tree
         if(depth+1 > self.maxdepth):
                 self.maxdepth = depth+1
         #Checking if the state is not visisted:
@@ -56,44 +53,28 @@ class ucs:
             nChild,nParent,dir2 = self.getParent(node)
             if not nParent == None :
                 #Getting the pair index
-                i = self.parent.index((nChild,nParent))
+                i = self.parent.index((nChild,nParent,dir2))
                 if nChild.value > node.value :
                     self.parent[i] = (node,parent,dir)
                     self.fringe.put((node.value,next(unique),node)) 
             self.fringe.put((node.value,next(unique),node))
             self.parent.append((node,parent,dir)) 
 
-
-
     #Main function
-    def search(self,STARTSTATE,FINSATATE):
-        #Check if puzzle 8 is solvable:
-        inv_count = 0 #if inversions are odd then puzzle is not solvable
-        for i in range(len(STARTSTATE)):
-            for j in range(i+1,len(STARTSTATE)):
-                if STARTSTATE[i] != 0 and STARTSTATE[j] != 0 and STARTSTATE[i] > STARTSTATE[j] :
-                    inv_count += 1
-        if(not inv_count%2 == 0):
-            return self.printans(None)
-            
+    def search(self,STARTSTATE,FINSTATE):  
         #Creating the root 
         self.root = Node(STARTSTATE,0) #The value is depth of node & key is the sequence we have
         self.tree.addNode(self.root)
         self.fringe.put((0,next(unique),self.root)) 
         self.parent.append((self.root,self.root,"[Root]"))
-        #self.visited.append(STARTSTATE)
-
         #Start the serach
         while not self.fringe.empty():
             node = self.fringe.get()[2] #Get the next node in queue
             seq = node.key.copy() #State of the puzzle right now
             depth = node.value #Nodes depth in the tree
-            #Checking the max depth
-
             #Check for termination
             if seq == FINSTATE:
                 return self.printans(node)
-
             #Finding the successors 
             index = seq.index(0)
             i,j = self.getIndex(index)            
@@ -117,13 +98,13 @@ class ucs:
                 newindex = (i+1)*3+j
                 newSeq = self.swap(index,newindex,seq.copy())
                 self.update(newSeq,node,"[Down]")
-            #Addin the sequnce to the visited 
+            #Adding the sequnce to the visited 
             self.visited.append(seq)
 
     #Printing the answer
     def printans(self,node):
         if node == None:
-            return "No answer has been found!"
+            return "Unfrotunetly no answer was found using this algorithm for this initial state"
         else:
             path = deque()
             cost = str(node.value)   #Cost/depth of the answer
@@ -138,12 +119,8 @@ class ucs:
             ans = ""
             while(len(path) > 0):
                 ans += path.pop() + "->"
+            print(ans)
             ans += "Fin"
             ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nNodes in the search tree:" + str(len(self.tree.nodeList)) + "\nMaximum depth: " + str(self.maxdepth) 
             ans += "\nNodes in the fringe: " + str(self.fringe.qsize())
             return ans
-
-if __name__ == "__main__":
-    INISTATE = [1,2,5,3,4,0,6,7,8]
-    FINSTATE = [0,1,2,3,4,5,6,7,8]
-    print(ucs().search(INISTATE,FINSTATE))

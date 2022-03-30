@@ -10,7 +10,6 @@ class Node:
         else:
             self.value = None
         self.children = [] #List of adjacent node
-        self.visited = False
     
     #Adding a edge to the node
     def addChild(self,node,edge=1):
