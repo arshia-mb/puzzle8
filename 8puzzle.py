@@ -8,7 +8,9 @@ from random import shuffle #Randomizer
 #Tkinter imports
 from tkinter import * 
 from tkinter import messagebox
-import tracemalloc #memmory management
+
+import tracemalloc #memmory mesurement
+import time #time mesurement 
 
 #Search algorithms
 from a import Asearch #A* Search
@@ -106,7 +108,8 @@ def clickStart():
     op = opVar.get() #Getting what operation we have
     hf = int(hVar.get()[1]) #Getting the Hurestic function value
     ans = "" #Answer to the serach inlduing all the info we must show
-    tracemalloc.reset_peak()
+    tracemalloc.reset_peak() #find out how much memorry is used
+    start_time = time.time() #start mesuring time
     if op == "UCS":
         ans = ucs().search(INISTATE,FINSTATE)
     elif op == "IDS":
@@ -116,8 +119,8 @@ def clickStart():
     else:
         messagebox.showinfo("Non Feature","The IDA* search has not been implemented yet in the system.")
         ans = ""
-    ans 
-    print(tracemalloc.get_traced_memory())
+    ans += "Memmory usage: Size " + str(tracemalloc.get_traced_memory()[0]) + "Kib Peak " + str(tracemalloc.get_traced_memory()[1])+ "Kib\n"
+    ans += "Time: " + str(time.time()-start_time)
     #Showing the answer       
     ansLabel['text'] = ans
 
