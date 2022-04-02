@@ -81,9 +81,10 @@ class ids:
             ans = self.dfs(STARTSTATE,FINSTATE,depth)
             #Moving to the next iteration
             depth += 1
-            if depth > self.MAX:
+            if depth == self.MAX:
                 break
         return ans
+
     def dfs(self,STARTSTATE,FINSTATE,MAXDEPTH):
         #Creating the root 
         self.root = Node(STARTSTATE,0) #The value is depth of node & key is the sequence we have

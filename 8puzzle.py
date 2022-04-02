@@ -1,13 +1,14 @@
 #Puzzle 8 solver using AI informed and uninformed search algorithm
 #This part is the interface that you can use to created the puzzle, chose what algorithm you want to use and shows the resault of said search.
 #Arshia Moradi 02 April 2022 
-import re
-from random import shuffle
-from tkinter import *
-from tkinter import messagebox
-from tkinter.tix import COLUMN
 
-from pygame import MIDIIN
+from glob import glob
+import re   #Regix 
+from random import shuffle #Randomizer
+#Tkinter imports
+from tkinter import * 
+from tkinter import messagebox
+import tracemalloc #memmory management
 
 #Search algorithms
 from a import Asearch #A* Search
@@ -83,10 +84,12 @@ buttonRandom = Button(initFrame, text = "Ranzdomized State", padx=45,pady=20,com
 
 #Creating answer frame
 Label(infoFrame, text = "The resaluts of the search:", font='-*-lucidatypewriter-medium-r-*-*-*-140-*-*-*-*-*-*',padx=2,pady=5).grid(row=0,column=0,sticky='w')
-ansLabel = Label(infoFrame, text = "",padx=2,pady=2,justify=LEFT)
+ansLabel = Label(infoFrame, text = "",wraplengt=475,padx=2,pady=2,justify=LEFT)
 ansLabel.grid(row=1,column=0,sticky='w')
 
 #Creating the search frame
+
+#Starting the search
 def clickStart():
     INISTATE = getState()
     FINSTATE = [0,1,2,3,4,5,6,7,8]
@@ -103,6 +106,7 @@ def clickStart():
     op = opVar.get() #Getting what operation we have
     hf = int(hVar.get()[1]) #Getting the Hurestic function value
     ans = "" #Answer to the serach inlduing all the info we must show
+    tracemalloc.reset_peak()
     if op == "UCS":
         ans = ucs().search(INISTATE,FINSTATE)
     elif op == "IDS":
@@ -112,6 +116,8 @@ def clickStart():
     else:
         messagebox.showinfo("Non Feature","The IDA* search has not been implemented yet in the system.")
         ans = ""
+    ans 
+    print(tracemalloc.get_traced_memory())
     #Showing the answer       
     ansLabel['text'] = ans
 
@@ -141,4 +147,6 @@ huresticOp.grid(row = 0,column = 2, padx=4,pady=2)
 
 
 #main loop
+tracemalloc.start()
 window.mainloop()
+tracemalloc.stop()
