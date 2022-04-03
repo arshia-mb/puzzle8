@@ -3,6 +3,8 @@
 from collections import deque
 from itertools import count
 from time import sleep
+import time
+import tracemalloc
 unique = count()
 from graph import *
 
@@ -10,13 +12,13 @@ PUZZLE=3
 
 class ids:
     def __init__(self):
-        self.tree = TreeGraph() #The search tree for the algorithm
         self.fringe = deque() #Queue for expandable nodes
         self.parent = [] #Each nodes parent(only the ones that are have not been visited twice)
         self.visited = [] #Nodes that are visited
         self.root = None
         self.maxdepth = 0 #max depth of the 
         self.isDone = False #Checks if it can stop iterating
+        self.startTime = 0
         self.MAX = 10000
 
     #Gets the location of the zero/white space in the sequnce        
@@ -45,8 +47,6 @@ class ids:
         depth = parent.value
         #Adding the node to the search tree
         node = Node(seq,depth+1)
-        parent.addChild(node)
-        self.tree.addNode(node)
         #Checking the max depth of the tree
         if(depth+1 > self.maxdepth):
                 self.maxdepth = depth+1
@@ -65,13 +65,14 @@ class ids:
 
     #Main function
     def search(self,STARTSTATE,FINSTATE):
+        self.startTime = time.time()
+        tracemalloc.start()  
         self.isDone = False
         depth = 0 #Depth iteration number
         #start iterating
         ans = "The depth value exceeded" + str(self.MAX)
         while not self.isDone:
             #reseting everything!
-            self.tree = TreeGraph() #The search tree for the algorithm
             self.fringe = deque() #Queue for expandable nodes
             self.parent = [] #Each nodes parent(only the ones that are have not been visited twice)
             self.visited = [] #Nodes that are visited
@@ -88,7 +89,6 @@ class ids:
     def dfs(self,STARTSTATE,FINSTATE,MAXDEPTH):
         #Creating the root 
         self.root = Node(STARTSTATE,0) #The value is depth of node & key is the sequence we have
-        self.tree.addNode(self.root)
         self.fringe.append(self.root) 
         self.parent.append((self.root,self.root,"[Root]"))
         #Start the serach
@@ -132,6 +132,9 @@ class ids:
 
     #Printing the answer
     def printans(self,node):
+        memmory = tracemalloc.get_traced_memory()[1]
+        times = time.time()-self.startTime
+        tracemalloc.stop()
         if node == None:
             return "Unfrotunetly no answer was found using this algorithm for this initial state"
         else:
@@ -149,5 +152,10 @@ class ids:
             while(len(path) > 0):
                 ans += path.pop() + "->"
             ans += "Fin"
-            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded +"\nMaximum depth: " + str(self.maxdepth) 
+            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nMaximum depth: " + str(self.maxdepth) + "\nTime " + str(times) + "\nMemmory in B: " + str(memmory) 
             return ans
+
+
+#I = [1,2,5,3,4,0,6,7,8]
+#E = [0,1,2,3,4,5,6,7,8]
+#print(ids().search(I,E))

@@ -7,9 +7,6 @@ from random import shuffle #Randomizer
 from tkinter import * 
 from tkinter import messagebox
 
-import tracemalloc #memmory mesurement
-import time #time mesurement 
-
 #Search algorithms
 from a import Asearch #A* Search
 from ucs import ucs #Uninformed cost search
@@ -90,6 +87,7 @@ ansLabel.grid(row=1,column=0,sticky='w')
 
 #Creating the search frame
 
+
 #Starting the search
 def clickStart():
     INISTATE = getState()
@@ -107,18 +105,16 @@ def clickStart():
     op = opVar.get() #Getting what operation we have
     hf = int(hVar.get()[1]) #Getting the Hurestic function value
     ans = "" #Answer to the serach inlduing all the info we must show
-    tracemalloc.reset_peak() #find out how much memorry is used
-    start_time = time.time() #start mesuring time
     if op == "UCS":
-        ans = ucs().search(INISTATE,FINSTATE)
+        ans = UCS.search(INISTATE,FINSTATE)
     elif op == "IDS":
-        ans = ids().search(INISTATE,FINSTATE)
+        ans = IDS.search(INISTATE,FINSTATE)
     elif op == "A*":
-        ans = Asearch(hf).search(INISTATE,FINSTATE)
+        A.H = hf
+        ans = A.search(INISTATE,FINSTATE)
     else:
-        ans = IDAsearch(hf).search(INISTATE,FINSTATE)
-    ans += "\nMemmory usage: Size " + str(tracemalloc.get_traced_memory()[0]) + "Kib Peak " + str(tracemalloc.get_traced_memory()[1])+ "Kib\n"
-    ans += "Time: " + str(time.time()-start_time)
+        IDA.H = hf
+        ans = IDA.search(INISTATE,FINSTATE)
     #Showing the answer       
     ansLabel['text'] = ans
 
@@ -147,7 +143,10 @@ huresticOp.config(state=DISABLED)
 huresticOp.grid(row = 0,column = 2, padx=4,pady=2)
 
 
-#main loop
-tracemalloc.start()
-window.mainloop()
-tracemalloc.stop()
+
+if __name__ == "__main__":
+    UCS = ucs()
+    IDS = ids()
+    A = Asearch()
+    IDA = IDAsearch()
+    window.mainloop()

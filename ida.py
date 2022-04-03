@@ -4,6 +4,8 @@ from collections import deque
 from itertools import count
 from sre_constants import MAX_UNTIL
 from telnetlib import STATUS
+import time
+import tracemalloc
 unique = count()
 from graph import *
 
@@ -57,13 +59,15 @@ class IDAsearch:
         count = 0
         for i in range(len(seq)):
             if not i == seq[i]:
-                i1,j1 = self.getLocation(i) #Our current location
-                i2,j2 = self.getLocation(seq[i]) #Desired location
+                i1,j1 = self.getIndex(i) #Our current location
+                i2,j2 = self.getIndex(seq[i]) #Desired location
                 count += abs(i1-i2) + abs(j1-j2)
         return count
 
     #The search function
     def search(self,INITSTATE,FINSTATE):
+        self.startTime = time.time()
+        tracemalloc.start()  
         self.root = Node(INITSTATE,0)
         threshhold = self.hurestic(INITSTATE)
         while True:
@@ -146,6 +150,9 @@ class IDAsearch:
                
     #Printing the answer
     def printans(self):
+        memmory = tracemalloc.get_traced_memory()[1]
+        times = time.time()-self.startTime
+        tracemalloc.stop()
         node = self.finNode
         if node == None:
             return "Unfrotunetly no answer was found using this algorithm for this initial state"
@@ -164,6 +171,9 @@ class IDAsearch:
             while(len(path) > 0):
                 ans += path.pop() + "->"
             ans += "Fin"
-            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nMaximum depth: " + str(self.maxdepth) 
+            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nMaximum depth: " + str(self.maxdepth) + "\nTime " + str(times) + "\nMemmory in B: " + str(memmory) 
             return ans
- 
+
+#I = [1,2,5,3,4,0,6,7,8]
+#E = [0,1,2,3,4,5,6,7,8]
+#print(IDAsearch().search(I,E))
