@@ -167,6 +167,3 @@ class IDAsearch:
             ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nMaximum depth: " + str(self.maxdepth) 
             return ans
  
-I = [1,2,5,0,3,4,6,7,8]
-E = [0,1,2,3,4,5,6,7,8]
-print(IDAsearch().search(I,E))

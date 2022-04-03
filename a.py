@@ -62,28 +62,28 @@ class Asearch:
         return count
 
     #Expanding the Nodes
-        def update(self,seq,parent,dir):
-            hf = self.hurestic(seq) #Hurestic function value for this sequnce
-            depth = parent.value #Cost of reaching the node
-            #Adding the node to the search tree
-            node = Node(seq,depth+1)
-            parent.addChild(node)
-            self.tree.addNode(node)
-            #Checking the max depth of the tree
-            if(depth+1 > self.maxdepth):
-                    self.maxdepth = depth+1
+    def update(self,seq,parent,dir):
+        hf = self.hurestic(seq) #Hurestic function value for this sequnce
+        depth = parent.value #Cost of reaching the node
+        #Adding the node to the search tree
+        node = Node(seq,depth+1)
+        parent.addChild(node)
+        self.tree.addNode(node)
+        #Checking the max depth of the tree
+        if(depth+1 > self.maxdepth):
+                self.maxdepth = depth+1
         #Checking if the state is not visisted:
-            if(not seq in self.visited):
-                #Checking if the state is inside the queue (has a parent)
-                nChild,nParent,dir2 = self.getParent(node)
-                if not nParent == None :
-                    #Getting the pair index
-                    i = self.parent.index((nChild,nParent,dir2))
-                    if nChild.value > node.value :
-                        self.parent[i] = (node,parent,dir)
-                        self.fringe.put((node.value + hf,next(unique),node)) 
-                self.fringe.put((node.value + hf,next(unique),node))
-                self.parent.append((node,parent,dir)) 
+        if(not seq in self.visited):
+            #Checking if the state is inside the queue (has a parent)
+            nChild,nParent,dir2 = self.getParent(node)
+            if not nParent == None :
+                #Getting the pair index
+                i = self.parent.index((nChild,nParent,dir2))
+                if nChild.value > node.value :
+                    self.parent[i] = (node,parent,dir)
+                    self.fringe.put((node.value + hf,next(unique),node)) 
+            self.fringe.put((node.value + hf,next(unique),node))
+            self.parent.append((node,parent,dir)) 
 
     #A* search algorithm
     def search(self,STARTSTATE,FINSTATE):
