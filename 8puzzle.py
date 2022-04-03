@@ -1,8 +1,6 @@
 #Puzzle 8 solver using AI informed and uninformed search algorithm
 #This part is the interface that you can use to created the puzzle, chose what algorithm you want to use and shows the resault of said search.
 #Arshia Moradi 02 April 2022 
-
-from glob import glob
 import re   #Regix 
 from random import shuffle #Randomizer
 #Tkinter imports
@@ -16,6 +14,7 @@ import time #time mesurement
 from a import Asearch #A* Search
 from ucs import ucs #Uninformed cost search
 from ids import ids #Iterative deeping search
+from ida import IDAsearch
 
 window = Tk() #The main  
 window.title("AI project by Arshia Moradi")
@@ -117,9 +116,8 @@ def clickStart():
     elif op == "A*":
         ans = Asearch(hf).search(INISTATE,FINSTATE)
     else:
-        messagebox.showinfo("Non Feature","The IDA* search has not been implemented yet in the system.")
-        ans = ""
-    ans += "Memmory usage: Size " + str(tracemalloc.get_traced_memory()[0]) + "Kib Peak " + str(tracemalloc.get_traced_memory()[1])+ "Kib\n"
+        ans = IDAsearch(hf).search(INISTATE,FINSTATE)
+    ans += "\nMemmory usage: Size " + str(tracemalloc.get_traced_memory()[0]) + "Kib Peak " + str(tracemalloc.get_traced_memory()[1])+ "Kib\n"
     ans += "Time: " + str(time.time()-start_time)
     #Showing the answer       
     ansLabel['text'] = ans

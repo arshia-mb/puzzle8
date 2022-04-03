@@ -149,6 +149,5 @@ class ids:
             while(len(path) > 0):
                 ans += path.pop() + "->"
             ans += "Fin"
-            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nNodes in the search tree:" + str(len(self.tree.nodeList)) + "\nMaximum depth: " + str(self.maxdepth) 
-            ans += "\nNodes in the fringe: " + str(len(self.fringe))
+            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded +"\nMaximum depth: " + str(self.maxdepth) 
             return ans

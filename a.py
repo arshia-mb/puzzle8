@@ -38,36 +38,59 @@ class Asearch:
                 return child, parent, dir
         return None, None, None #The state has not been seen yet
 
+    #Hurestic Functions
+    def hurestic(self,seq):
+        if(self.H==1):
+            return self.h1(seq)
+        elif(self.H==2):
+            return self.h2(seq)   
+
+    def h1(self,seq): #Number of wrong/misplaced numbers
+        count = 0
+        for i in range(len(seq)):
+            if(i != seq[i]):
+                count+=1
+        return count
+
+    def h2(self,seq): #Manhattan huristic 
+        count = 0
+        for i in range(len(seq)):
+            if not i == seq[i]:
+                i1,j1 = self.getLocation(i) #Our current location
+                i2,j2 = self.getLocation(seq[i]) #Desired location
+                count += abs(i1-i2) + abs(j1-j2)
+        return count
+
     #Expanding the Nodes
-    def update(self,seq,parent,dir):
-        hf = self.geth(seq) #Hurestic function value for this sequnce
-        depth = parent.value #Cost of reaching the node
-        #Adding the node to the search tree
-        node = Node(seq,depth+1)
-        parent.addChild(node)
-        self.tree.addNode(node)
-        #Checking the max depth of the tree
-        if(depth+1 > self.maxdepth):
-                self.maxdepth = depth+1
-       #Checking if the state is not visisted:
-        if(not seq in self.visited):
-            #Checking if the state is inside the queue (has a parent)
-            nChild,nParent,dir2 = self.getParent(node)
-            if not nParent == None :
-                #Getting the pair index
-                i = self.parent.index((nChild,nParent,dir2))
-                if nChild.value > node.value :
-                    self.parent[i] = (node,parent,dir)
-                    self.fringe.put((node.value + hf,next(unique),node)) 
-            self.fringe.put((node.value + hf,next(unique),node))
-            self.parent.append((node,parent,dir)) 
+        def update(self,seq,parent,dir):
+            hf = self.hurestic(seq) #Hurestic function value for this sequnce
+            depth = parent.value #Cost of reaching the node
+            #Adding the node to the search tree
+            node = Node(seq,depth+1)
+            parent.addChild(node)
+            self.tree.addNode(node)
+            #Checking the max depth of the tree
+            if(depth+1 > self.maxdepth):
+                    self.maxdepth = depth+1
+        #Checking if the state is not visisted:
+            if(not seq in self.visited):
+                #Checking if the state is inside the queue (has a parent)
+                nChild,nParent,dir2 = self.getParent(node)
+                if not nParent == None :
+                    #Getting the pair index
+                    i = self.parent.index((nChild,nParent,dir2))
+                    if nChild.value > node.value :
+                        self.parent[i] = (node,parent,dir)
+                        self.fringe.put((node.value + hf,next(unique),node)) 
+                self.fringe.put((node.value + hf,next(unique),node))
+                self.parent.append((node,parent,dir)) 
 
-
+    #A* search algorithm
     def search(self,STARTSTATE,FINSTATE):
         #Creating the root 
         self.root = Node(STARTSTATE,0) #The value is depth of node & key is the sequence we have
         self.tree.addNode(self.root)
-        self.fringe.put((self.geth(STARTSTATE),next(unique),self.root))
+        self.fringe.put((self.hurestic(STARTSTATE),next(unique),self.root))
         self.parent.append((self.root,self.root,"[Root]"))
         #Start the serach
         while not self.fringe.empty():
@@ -103,27 +126,6 @@ class Asearch:
             #Adding the sequnce to the visited 
             self.visited.append(seq)  
 
-    #Hurestic Functions
-    def geth(self,seq):
-        if(self.H==1):
-            return self.h1(seq)
-        elif(self.H==2):
-            return self.h2(seq)       
-    def h1(self,seq): #Number of wrong/misplaced numbers
-        count = 0
-        for i in range(len(seq)):
-            if(i != seq[i]):
-                count+=1
-        return count
-    def h2(self,seq): #Manhattan huristic 
-        count = 0
-        for i in range(len(seq)):
-            if not i == seq[i]:
-                i1,j1 = self.getLocation(i) #Our current location
-                i2,j2 = self.getLocation(seq[i]) #Desired location
-                count += abs(i1-i2) + abs(j1-j2)
-        return count
-
     #Printing the answer
     def printans(self,node):
         if node == None:
@@ -143,6 +145,5 @@ class Asearch:
             while(len(path) > 0):
                 ans += path.pop() + "->"
             ans += "Fin"
-            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nNodes in the search tree:" + str(len(self.tree.nodeList)) + "\nMaximum depth: " + str(self.maxdepth) 
-            ans += "\nNodes in the fringe: " + str(self.fringe.qsize())
+            ans += "\nCost of the path: " + cost + "\nNumber of nodes-expanded: " + expanded + "\nMaximum depth: " + str(self.maxdepth) 
             return ans
